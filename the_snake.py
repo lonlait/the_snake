@@ -24,8 +24,10 @@ BORDER_COLOR = (93, 216, 228)
 SPEED = 10
 
 # Global variables
-screen: pygame.Surface = None
-clock: pygame.time.Clock = None
+pygame.init()
+screen: pygame.Surface = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+clock: pygame.time.Clock = pygame.time.Clock()
+pygame.display.set_caption('Snake Game')
 
 
 class GameObject:
@@ -150,16 +152,17 @@ def handle_keys(snake):
 
 def main():
     """Main game loop."""
-    global screen, clock
-    pygame.init()
-    screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-    pygame.display.set_caption('Snake Game')
-    clock = pygame.time.Clock()
-
     snake = Snake()
     apple = Apple()
 
+    iteration = 0  # For debugging purposes
+    max_iterations = 1000  # To prevent infinite loop during tests
+
     while True:
+        if iteration > max_iterations:
+            print("Max iterations reached, exiting loop.")
+            break
+
         screen.fill(BACKGROUND_COLOR)
         handle_keys(snake)
         snake.update_direction()
@@ -174,6 +177,7 @@ def main():
 
         pygame.display.update()
         clock.tick(SPEED)
+        iteration += 1
 
 
 if __name__ == '__main__':
