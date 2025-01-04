@@ -160,6 +160,7 @@ def main():
     apple = Apple()
 
     while True:
+        print("Game loop running...")  # Debugging output
         screen.fill(BACKGROUND_COLOR)
         handle_keys(snake)
         snake.update_direction()
