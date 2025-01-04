@@ -1,6 +1,6 @@
-import pygame
-import random
 import sys
+import random
+import pygame
 
 # Constants
 SCREEN_WIDTH, SCREEN_HEIGHT = 640, 480
@@ -23,50 +23,50 @@ SPEED = 10
 
 
 class GameObject:
-    """Base class for game objects."""
+    '''Base class for game objects.'''
 
     def __init__(self, position=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2),
                  body_color=(255, 255, 255)):
-        """
+        '''
         Initialize basic attributes.
         :param position: Object position (tuple)
         :param body_color: Object color (RGB tuple)
-        """
+        '''
         self.position = position
         self.body_color = body_color
 
     def draw(self, surface):
-        """Abstract method for drawing the object."""
+        '''Abstract method for drawing the object.'''
         raise NotImplementedError
 
 
 class Apple(GameObject):
-    """Class for the apple."""
+    '''Class for the apple.'''
 
     def __init__(self):
-        """Initialize the apple with a random position."""
+        '''Initialize the apple with a random position.'''
         super().__init__(body_color=APPLE_COLOR)
         self.randomize_position()
 
     def randomize_position(self):
-        """Set a random position for the apple."""
+        '''Set a random position for the apple.'''
         self.position = (
             random.randint(0, GRID_WIDTH - 1) * GRID_SIZE,
             random.randint(0, GRID_HEIGHT - 1) * GRID_SIZE,
         )
 
     def draw(self, surface):
-        """Draw the apple."""
+        '''Draw the apple.'''
         rect = pygame.Rect(self.position, (GRID_SIZE, GRID_SIZE))
         pygame.draw.rect(surface, self.body_color, rect)
         pygame.draw.rect(surface, BORDER_COLOR, rect, 1)
 
 
 class Snake(GameObject):
-    """Class for the snake."""
+    '''Class for the snake.'''
 
     def __init__(self):
-        """Initialize the snake."""
+        '''Initialize the snake.'''
         super().__init__(body_color=SNAKE_COLOR)
         self.positions = [((SCREEN_WIDTH // 2), (SCREEN_HEIGHT // 2))]
         self.direction = RIGHT
@@ -75,11 +75,11 @@ class Snake(GameObject):
         self.last = None
 
     def get_head_position(self):
-        """Get the position of the snake's head."""
+        '''Get the position of the snake's head.'''
         return self.positions[0]
 
     def move(self):
-        """Update the snake's position."""
+        '''Update the snake's position.'''
         head_x, head_y = self.get_head_position()
         dir_x, dir_y = self.direction
         new_head = (
@@ -95,11 +95,11 @@ class Snake(GameObject):
             self.last = self.positions.pop()
 
     def grow(self):
-        """Increase the snake's length."""
+        '''Increase the snake's length.'''
         self.length += 1
 
     def update_direction(self):
-        """Update the snake's direction."""
+        '''Update the snake's direction.'''
         if self.next_direction:
             opposite_direction = (-self.direction[0], -self.direction[1])
             if self.next_direction != opposite_direction:
@@ -107,14 +107,14 @@ class Snake(GameObject):
             self.next_direction = None
 
     def reset(self):
-        """Reset the snake to its initial state."""
+        '''Reset the snake to its initial state.'''
         self.length = 1
         self.positions = [((SCREEN_WIDTH // 2), (SCREEN_HEIGHT // 2))]
         self.direction = random.choice([UP, DOWN, LEFT, RIGHT])
         self.last = None
 
     def draw(self, surface):
-        """Draw the snake."""
+        '''Draw the snake.'''
         for position in self.positions:
             rect = pygame.Rect(position, (GRID_SIZE, GRID_SIZE))
             pygame.draw.rect(surface, self.body_color, rect)
@@ -126,7 +126,7 @@ class Snake(GameObject):
 
 
 def handle_keys(snake):
-    """Handle key presses."""
+    '''Handle key presses.'''
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
@@ -143,10 +143,10 @@ def handle_keys(snake):
 
 
 def main():
-    """Main game loop."""
+    '''Main game loop.'''
     pygame.init()
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-    pygame.display.set_caption("Snake Game")
+    pygame.display.set_caption('Snake Game')
     clock = pygame.time.Clock()
 
     snake = Snake()
@@ -169,5 +169,5 @@ def main():
         clock.tick(SPEED)
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()
