@@ -1,5 +1,6 @@
-import sys
 import random
+import sys
+
 import pygame
 
 # Constants
@@ -146,7 +147,7 @@ def main():
     """Main game loop."""
     pygame.init()
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-    pygame.display.set_caption("Snake Game")
+    pygame.display.set_caption('Snake Game')
     clock = pygame.time.Clock()
 
     snake = Snake()
@@ -169,5 +170,5 @@ def main():
         clock.tick(SPEED)
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()
