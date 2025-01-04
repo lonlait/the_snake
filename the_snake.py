@@ -158,11 +158,7 @@ def main():
     iteration = 0  # For debugging purposes
     max_iterations = 1000  # To prevent infinite loop during tests
 
-    while True:
-        if iteration > max_iterations:
-            print("Max iterations reached, exiting loop.")
-            break
-
+    while iteration <= max_iterations:
         screen.fill(BACKGROUND_COLOR)
         handle_keys(snake)
         snake.update_direction()
