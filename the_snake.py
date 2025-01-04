@@ -24,8 +24,8 @@ BORDER_COLOR = (93, 216, 228)
 SPEED = 10
 
 # Global variables
-screen = None
-clock = None
+screen: pygame.Surface = None
+clock: pygame.time.Clock = None
 
 
 class GameObject:
