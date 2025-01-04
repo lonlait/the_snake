@@ -16,11 +16,16 @@ RIGHT = (1, 0)
 
 # Colors
 BACKGROUND_COLOR = (0, 0, 0)
+BOARD_BACKGROUND_COLOR = BACKGROUND_COLOR
 SNAKE_COLOR = (0, 255, 0)
 APPLE_COLOR = (255, 0, 0)
 BORDER_COLOR = (93, 216, 228)
 
 SPEED = 10
+
+# Global variables
+screen = None
+clock = None
 
 
 class GameObject:
@@ -145,6 +150,7 @@ def handle_keys(snake):
 
 def main():
     """Main game loop."""
+    global screen, clock
     pygame.init()
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     pygame.display.set_caption('Snake Game')
