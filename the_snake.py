@@ -2,14 +2,13 @@ import random
 import sys
 
 import pygame
-
 # Constants
 SCREEN_WIDTH, SCREEN_HEIGHT = 640, 480
 GRID_SIZE = 20
 GRID_WIDTH = SCREEN_WIDTH // GRID_SIZE
 GRID_HEIGHT = SCREEN_HEIGHT // GRID_SIZE
 
-CENTER_POSITION = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)  # Centr
+CENTER_POSITION = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)  # Центр экрана
 
 UP = (0, -1)
 DOWN = (0, 1)
@@ -37,8 +36,7 @@ class GameObject:
 
     def draw(self):
         """Abstract method for drawing the object. Must be implemented by subclasses."""
-        raise NotImplementedError("Subclasses must implement this method.")
-    """Base class for all game objects."""
+        raise NotImplementedError('Subclasses must implement this method.')
 
     def __init__(self, position=CENTER_POSITION, body_color=SNAKE_COLOR):
         """Initialize the object with its position and color.
@@ -93,7 +91,7 @@ class Apple(GameObject):
         while True:
             new_position = (
                 random.randint(0, GRID_WIDTH - 1) * GRID_SIZE,
-                random.randint(0, GRID_HEIGHT - 1) * GRID_SIZE,
+                random.randint(0, GRID_HEIGHT - 1) * GRID_SIZE
             )
             if new_position not in occupied_positions:
                 self.position = new_position
