@@ -35,6 +35,11 @@ pygame.display.set_caption('Snake Game')
 class GameObject:
     """Base class for all game objects."""
 
+    def draw(self):
+        """Abstract method for drawing the object. Must be implemented by subclasses."""
+        raise NotImplementedError("Subclasses must implement this method.")
+    """Base class for all game objects."""
+
     def __init__(self, position=CENTER_POSITION, body_color=SNAKE_COLOR):
         """Initialize the object with its position and color.
 
