@@ -36,8 +36,8 @@ class GameObject:
     """Base class for all game objects."""
 
     def draw(self):
-        """Abstract method for drawing the object. Must be implemented by subclasses."""
-        raise NotImplementedError("Subclasses must implement this method.")
+        """Abstract method for drawing"""
+        raise NotImplementedError('Subclasses must implement this method.)
     """Base class for all game objects."""
 
     def __init__(self, position=CENTER_POSITION, body_color=SNAKE_COLOR):
