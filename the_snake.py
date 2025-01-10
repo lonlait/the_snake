@@ -9,7 +9,7 @@ GRID_SIZE = 20
 GRID_WIDTH = SCREEN_WIDTH // GRID_SIZE
 GRID_HEIGHT = SCREEN_HEIGHT // GRID_SIZE
 
-CENTER_POSITION = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)  # Центр экрана
+CENTER_POSITION = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)  # Centr
 
 UP = (0, -1)
 DOWN = (0, 1)
@@ -50,7 +50,8 @@ class GameObject:
 
         Args:
             position (tuple): The (x, y) position of the cell.
-            color (tuple, optional): The RGB color of the cell. Defaults to object's body color.
+            color (tuple, optional): The RGB color of the cell.
+            Defaults to object's body color.
         """
         if color is None:
             color = self.body_color
@@ -62,13 +63,15 @@ class GameObject:
 class Apple(GameObject):
     """Class representing the apple in the game."""
 
-    def __init__(self, position=CENTER_POSITION, body_color=APPLE_COLOR, occupied_positions=None):
+    def __init__(self, position=CENTER_POSITION, body_color=APPLE_COLOR,
+                 occupied_positions=None):
         """Initialize the apple with its position and color.
 
         Args:
             position (tuple): The initial position of the apple.
             body_color (tuple): The RGB color of the apple.
-            occupied_positions (list, optional): List of positions that the apple should avoid. Defaults to None.
+            occupied_positions (list, optional): List of positions that the apple
+            should avoid. Defaults to None.
         """
         super().__init__(position=position, body_color=body_color)
         if occupied_positions is None:
@@ -79,7 +82,8 @@ class Apple(GameObject):
         """Set a random position for the apple avoiding occupied positions.
 
         Args:
-            occupied_positions (list): List of positions that the apple should avoid.
+            occupied_positions (list): List of positions that the apple
+            should avoid.
         """
         while True:
             new_position = (
@@ -125,7 +129,7 @@ class Snake(GameObject):
         return self.positions[0]
 
     def move(self):
-        """Update the snake's position by moving in the current direction."""
+        """Update the snake's position by moving in the current direct."""
         head_x, head_y = self.get_head_position()
         dir_x, dir_y = self.direction
         new_head = (
@@ -135,14 +139,14 @@ class Snake(GameObject):
 
         self.positions.insert(0, new_head)
         if len(self.positions) > self.length:
-            self.last = self.positions.pop() if len(self.positions) > self.length else None
+            self.last = self.positions.pop()
 
     def grow(self):
         """Increase the length of the snake."""
         self.length += 1
 
     def update_direction(self):
-        """Update the snake's direction based on the next direction."""
+        """Update the snake's direct. based on the next direct."""
         if self.next_direction:
             self.direction = self.next_direction
             self.next_direction = None
@@ -173,7 +177,6 @@ def handle_keys(snake):
     Args:
         snake (Snake): The snake object to control.
     """
-    opposite_direction = (-snake.direction[0], -snake.direction[1])
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
@@ -183,7 +186,9 @@ def handle_keys(snake):
                 pygame.quit()
                 sys.exit()
             else:
-                snake.next_direction = DIRECTION_MAP.get((snake.direction, event.key), snake.direction)
+                snake.next_direction = DIRECTION_MAP.get(
+                    (snake.direction, event.key), snake.direction
+                )
 
 
 def main():
