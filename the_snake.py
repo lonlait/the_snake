@@ -71,7 +71,7 @@ class Apple(GameObject):
             position (tuple): The initial position of the apple.
             body_color (tuple): The RGB color of the apple.
             occupied_positions (list, optional): List of positions that the
-                apple should avoid. Defaults to None.
+            apple should avoid. Defaults to None.
         """
         super().__init__(position=position, body_color=body_color)
         if occupied_positions is None:
