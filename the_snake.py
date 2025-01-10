@@ -2,6 +2,7 @@ import random
 import sys
 
 import pygame
+
 # Constants
 SCREEN_WIDTH, SCREEN_HEIGHT = 640, 480
 GRID_SIZE = 20
@@ -35,7 +36,7 @@ class GameObject:
     """Base class for all game objects."""
 
     def draw(self):
-        """Abstract method for drawing the object. Must be implemented by subclasses."""
+        """Abstract method for drawing the object"""
         raise NotImplementedError('Subclasses must implement this method.')
 
     def __init__(self, position=CENTER_POSITION, body_color=SNAKE_COLOR):
