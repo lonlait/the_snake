@@ -9,7 +9,7 @@ GRID_SIZE = 20
 GRID_WIDTH = SCREEN_WIDTH // GRID_SIZE
 GRID_HEIGHT = SCREEN_HEIGHT // GRID_SIZE
 
-CENTER_POSITION = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)  # Центр экрана
+CENTER_POSITION = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)  # Centr
 
 UP = (0, -1)
 DOWN = (0, 1)
@@ -171,10 +171,12 @@ DIRECTION_MAP = {
     (RIGHT, pygame.K_DOWN): DOWN,
 }
 
+
 def handle_keys(snake):
     """Handle key presses for controlling the snake.
 
-    Args: snake (Snake): The snake object to control.
+    Args:
+        snake (Snake): The snake object to control.
     """
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
