@@ -174,8 +174,7 @@ DIRECTION_MAP = {
 def handle_keys(snake):
     """Handle key presses for controlling the snake.
 
-    Args:
-        snake (Snake): The snake object to control.
+    Args: snake (Snake): The snake object to control.
     """
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
