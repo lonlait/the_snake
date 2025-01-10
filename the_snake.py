@@ -9,7 +9,7 @@ GRID_SIZE = 20
 GRID_WIDTH = SCREEN_WIDTH // GRID_SIZE
 GRID_HEIGHT = SCREEN_HEIGHT // GRID_SIZE
 
-CENTER_POSITION = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)  # Centr
+CENTER_POSITION = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)  # Центр экрана
 
 UP = (0, -1)
 DOWN = (0, 1)
@@ -51,7 +51,7 @@ class GameObject:
         Args:
             position (tuple): The (x, y) position of the cell.
             color (tuple, optional): The RGB color of the cell.
-            Defaults to object's body color.
+                Defaults to object's body color.
         """
         if color is None:
             color = self.body_color
@@ -70,8 +70,8 @@ class Apple(GameObject):
         Args:
             position (tuple): The initial position of the apple.
             body_color (tuple): The RGB color of the apple.
-            occupied_positions (list, optional): List of positions that the apple
-            should avoid. Defaults to None.
+            occupied_positions (list, optional): List of positions that the
+                apple should avoid. Defaults to None.
         """
         super().__init__(position=position, body_color=body_color)
         if occupied_positions is None:
@@ -83,7 +83,7 @@ class Apple(GameObject):
 
         Args:
             occupied_positions (list): List of positions that the apple
-            should avoid.
+                should avoid.
         """
         while True:
             new_position = (
@@ -129,7 +129,7 @@ class Snake(GameObject):
         return self.positions[0]
 
     def move(self):
-        """Update the snake's position by moving in the current direct."""
+        """Update the snake's position by moving in the current direction."""
         head_x, head_y = self.get_head_position()
         dir_x, dir_y = self.direction
         new_head = (
@@ -146,7 +146,7 @@ class Snake(GameObject):
         self.length += 1
 
     def update_direction(self):
-        """Update the snake's direct. based on the next direct."""
+        """Update the snake's direction based on the next direction."""
         if self.next_direction:
             self.direction = self.next_direction
             self.next_direction = None
@@ -197,6 +197,7 @@ def main():
     apple = Apple(occupied_positions=snake.positions)
 
     MAX_ITERATIONS = 1000  # To prevent infinite loop during tests
+
     iteration = 0  # For debugging purposes
 
     while iteration <= MAX_ITERATIONS:
