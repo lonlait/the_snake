@@ -58,10 +58,9 @@ class GameObject:
                 Defaults to object's body color.
         """
         if color is None:
-            color = color or self.body_color
+            color = self.body_color
         rect = pygame.Rect(position, (GRID_SIZE, GRID_SIZE))
         pygame.draw.rect(screen, color, rect)
- #       pygame.draw.rect(screen, BORDER_COLOR, rect, 1)
 
 
 class Apple(GameObject):
@@ -220,7 +219,7 @@ def main():
             snake.reset()
             apple.randomize_position(snake.positions)
 
-        if snake.get_head_position() == apple.position:
+        elif snake.get_head_position() == apple.position:
             snake.grow()
             apple.randomize_position(snake.positions)
 
