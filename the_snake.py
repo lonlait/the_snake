@@ -9,7 +9,7 @@ GRID_SIZE = 20
 GRID_WIDTH = SCREEN_WIDTH // GRID_SIZE
 GRID_HEIGHT = SCREEN_HEIGHT // GRID_SIZE
 
-CENTER_POSITION = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)  # Центр экрана
+CENTER_POSITION = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)
 
 UP = (0, -1)
 DOWN = (0, 1)
@@ -58,10 +58,10 @@ class GameObject:
                 Defaults to object's body color.
         """
         if color is None:
-            color = self.body_color
+            color = color or self.body_color
         rect = pygame.Rect(position, (GRID_SIZE, GRID_SIZE))
         pygame.draw.rect(screen, color, rect)
-        pygame.draw.rect(screen, BORDER_COLOR, rect, 1)
+ #       pygame.draw.rect(screen, BORDER_COLOR, rect, 1)
 
 
 class Apple(GameObject):
@@ -90,12 +90,11 @@ class Apple(GameObject):
                 should avoid.
         """
         while True:
-            new_position = (
+            self.position = (
                 random.randint(0, GRID_WIDTH - 1) * GRID_SIZE,
                 random.randint(0, GRID_HEIGHT - 1) * GRID_SIZE
             )
-            if new_position not in occupied_positions:
-                self.position = new_position
+            if self.position not in occupied_positions:
                 break
 
     def draw(self):
@@ -114,13 +113,18 @@ class Snake(GameObject):
             body_color (tuple): The RGB color of the snake.
         """
         super().__init__(position=position, body_color=body_color)
-        self.reset()
+        self.reset(initial_direction=RIGHT)
 
-    def reset(self):
-        """Reset the snake to its initial state."""
+    def reset(self, initial_direction=None):
+        """Reset the snake to its initial state.
+
+        Args:
+            initial_direction (tuple, optional): The initial direction of the snake.
+                Defaults to a random direction.
+        """
         self.length = 1
         self.positions = [self.position]
-        self.direction = random.choice([UP, DOWN, LEFT, RIGHT])
+        self.direction = initial_direction if initial_direction else random.choice([UP, DOWN, LEFT, RIGHT])
         self.next_direction = None
         self.last = None
 
@@ -214,6 +218,7 @@ def main():
         # Check for collisions with itself
         if snake.get_head_position() in snake.positions[1:]:
             snake.reset()
+            apple.randomize_position(snake.positions)
 
         if snake.get_head_position() == apple.position:
             snake.grow()
