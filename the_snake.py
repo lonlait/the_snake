@@ -105,7 +105,7 @@ class Snake(GameObject):
     """Class representing the snake in the game."""
 
     def __init__(self, position=CENTER_POSITION, body_color=SNAKE_COLOR):
-        """Initialize the snake with its initial position and color.
+        """Initialize the snake (position and color).
 
         Args:
             position (tuple): The initial position of the snake.
@@ -118,7 +118,8 @@ class Snake(GameObject):
         """Reset the snake to its initial state.
 
         Args:
-            initial_direction (tuple, optional): The initial direction of the snake.
+            initial_direction (tuple, optional):
+            The initial direction of the snake.
                 Defaults to a random direction.
         """
         self.length = 1
@@ -155,7 +156,7 @@ class Snake(GameObject):
         self.length += 1
 
     def update_direction(self):
-        """Update the snake's direction based on the next direction."""
+        """Update the snake's direction based on the next dir."""
         if self.next_direction:
             self.direction = self.next_direction
             self.next_direction = None
