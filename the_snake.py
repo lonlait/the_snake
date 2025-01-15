@@ -1,3 +1,4 @@
+#мне кажется я все учла
 import random
 import sys
 
