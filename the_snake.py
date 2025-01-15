@@ -1,4 +1,3 @@
-#мне кажется я все учла
 import random
 import sys
 
@@ -125,7 +124,8 @@ class Snake(GameObject):
         """
         self.length = 1
         self.positions = [self.position]
-        self.direction = initial_direction if initial_direction else random.choice(
+        self.direction = initial_direction if initial_direction \
+            else random.choice(
             [UP, DOWN, LEFT, RIGHT]
         )
         self.next_direction = None
