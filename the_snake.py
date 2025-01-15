@@ -58,7 +58,7 @@ class GameObject:
                 Defaults to object's body color.
         """
         if color is None:
-            color = self.body_color
+            color = color or self.body_color
         rect = pygame.Rect(position, (GRID_SIZE, GRID_SIZE))
         pygame.draw.rect(screen, color, rect)
 
