@@ -9,7 +9,7 @@ GRID_SIZE = 20
 GRID_WIDTH = SCREEN_WIDTH // GRID_SIZE
 GRID_HEIGHT = SCREEN_HEIGHT // GRID_SIZE
 
-CENTER_POSITION = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)
+CENTER_POSITION = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)  # Центр экрана
 
 UP = (0, -1)
 DOWN = (0, 1)
@@ -36,7 +36,7 @@ class GameObject:
     """Base class for all game objects."""
 
     def draw(self):
-        """Abstract method for drawing the object"""
+        """Abstract method for drawing the object. Must be implemented by subclasses."""
         raise NotImplementedError('Subclasses must implement this method.')
 
     def __init__(self, position=CENTER_POSITION, body_color=SNAKE_COLOR):
@@ -89,11 +89,12 @@ class Apple(GameObject):
                 should avoid.
         """
         while True:
-            self.position = (
+            new_position = (
                 random.randint(0, GRID_WIDTH - 1) * GRID_SIZE,
                 random.randint(0, GRID_HEIGHT - 1) * GRID_SIZE
             )
-            if self.position not in occupied_positions:
+            if new_position not in occupied_positions:
+                self.position = new_position
                 break
 
     def draw(self):
@@ -105,30 +106,20 @@ class Snake(GameObject):
     """Class representing the snake in the game."""
 
     def __init__(self, position=CENTER_POSITION, body_color=SNAKE_COLOR):
-        """Initialize the snake (position and color).
+        """Initialize the snake with its initial position and color.
 
         Args:
             position (tuple): The initial position of the snake.
             body_color (tuple): The RGB color of the snake.
         """
         super().__init__(position=position, body_color=body_color)
-        self.reset(initial_direction=RIGHT)
+        self.reset()
 
-    def reset(self, initial_direction=None):
-        """Reset the snake to its initial state.
-
-        Args:
-            initial_direction (tuple, optional):
-            The initial direction of the snake.
-                Defaults to a random direction.
-        """
+    def reset(self):
+        """Reset the snake to its initial state."""
         self.length = 1
         self.positions = [self.position]
-        self.direction = initial_direction \
-            if initial_direction \
-            else random.choice(
-            [UP, DOWN, LEFT, RIGHT]
-        )
+        self.direction = random.choice([UP, DOWN, LEFT, RIGHT])
         self.next_direction = None
         self.last = None
 
@@ -158,7 +149,7 @@ class Snake(GameObject):
         self.length += 1
 
     def update_direction(self):
-        """Update the snake's direction based on the next dir."""
+        """Update the snake's direction based on the next direction."""
         if self.next_direction:
             self.direction = self.next_direction
             self.next_direction = None
@@ -222,9 +213,8 @@ def main():
         # Check for collisions with itself
         if snake.get_head_position() in snake.positions[1:]:
             snake.reset()
-            apple.randomize_position(snake.positions)
 
-        elif snake.get_head_position() == apple.position:
+        if snake.get_head_position() == apple.position:
             snake.grow()
             apple.randomize_position(snake.positions)
 
