@@ -68,7 +68,8 @@ class GameObject:
         color = color or self.body_color
         rect = pygame.Rect(position, (GRID_SIZE, GRID_SIZE))
         pygame.draw.rect(screen, color, rect)
-        pygame.draw.rect(screen, BORDER_COLOR, rect, 1)
+        if color != BACKGROUND_COLOR:
+            pygame.draw.rect(screen, BORDER_COLOR, rect, 1)
 
 
 class Apple(GameObject):
@@ -109,7 +110,9 @@ class Apple(GameObject):
                 break
 
     def draw(self):
-        """Render the apple on the game screen."""
+        """
+        Render the apple on the game screen.
+        """
         self.draw_cell(self.position)
 
 
@@ -130,14 +133,14 @@ class Snake(GameObject):
         super().__init__(position=position, body_color=body_color)
         self.reset()
 
-    def reset(self):
+    def reset(self, initial_direction=None):
         """
         Reset the snake to its initial state, with a length
-        of 1 and a starting direction to the right.
+        of 1 and a random direction.
         """
         self.length = 1
         self.positions = [self.position]
-        self.direction = RIGHT
+        self.direction = initial_direction or random.choice([UP, DOWN, LEFT, RIGHT])
         self.next_direction = None
         self.last = None
 
@@ -170,7 +173,9 @@ class Snake(GameObject):
             self.last = None
 
     def grow(self):
-        """Increase the length of the snake by one."""
+        """
+        Increase the length of the snake by one.
+        """
         self.length += 1
 
     def update_direction(self):
@@ -245,7 +250,7 @@ def main():
         snake.move()
 
         if snake.get_head_position() in snake.positions[1:]:
-            snake.reset()
+            snake.reset(initial_direction=RIGHT)
         elif snake.get_head_position() == apple.position:
             snake.grow()
             apple.randomize_position(snake.positions)
