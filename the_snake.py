@@ -138,7 +138,9 @@ class Snake(GameObject):
         """
         self.length = 1
         self.positions = [self.position]
-        self.direction = initial_direction or random.choice([UP, DOWN, LEFT, RIGHT])
+        self.direction = initial_direction
+        if not self.direction:
+            self.direction = random.choice([UP, DOWN, LEFT, RIGHT])
         self.next_direction = None
         self.last = None
 
