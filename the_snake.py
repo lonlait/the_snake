@@ -33,14 +33,21 @@ pygame.display.set_caption('Snake Game')
 
 
 class GameObject:
-    """Base class for all game objects."""
+    """
+    Base class for all game objects in the game. Defines
+    common properties and methods for rendering objects.
+    """
 
     def draw(self):
-        """Abstract method for drawing the object"""
+        """
+        Draw the object on the game screen. This method
+        must be overridden by subclasses.
+        """
         raise NotImplementedError('Subclasses must implement this method.')
 
     def __init__(self, position=CENTER_POSITION, body_color=SNAKE_COLOR):
-        """Initialize the object with its position and color.
+        """
+        Initialize the game object with a position and color.
 
         Args:
             position (tuple): The (x, y) position of the object.
@@ -50,43 +57,48 @@ class GameObject:
         self.body_color = body_color
 
     def draw_cell(self, position, color=None):
-        """Draw a single cell on the game screen.
+        """
+        Draw a single cell on the screen.
 
         Args:
             position (tuple): The (x, y) position of the cell.
-            color (tuple, optional): The RGB color of the cell.
-                Defaults to object's body color.
+            color (tuple, optional): The color of the cell. Defaults
+            to the object's color.
         """
-        if color is None:
-            color = color or self.body_color
+        color = color or self.body_color
         rect = pygame.Rect(position, (GRID_SIZE, GRID_SIZE))
         pygame.draw.rect(screen, color, rect)
+        pygame.draw.rect(screen, BORDER_COLOR, rect, 1)
 
 
 class Apple(GameObject):
-    """Class representing the apple in the game."""
+    """
+    Class representing the apple in the game. Apples serve
+    as a goal for the snake to grow.
+    """
 
     def __init__(self, position=CENTER_POSITION, body_color=APPLE_COLOR,
                  occupied_positions=None):
-        """Initialize the apple with its position and color.
+        """
+        Initialize the apple with a position, color, and
+        list of occupied positions to avoid.
 
         Args:
-            position (tuple): The initial position of the apple.
+            position (tuple): The starting position of the apple.
             body_color (tuple): The RGB color of the apple.
-            occupied_positions (list, optional): List of positions that the
-                apple should avoid. Defaults to None.
+            occupied_positions (list, optional): List of positions
+            the apple should avoid.
         """
         super().__init__(position=position, body_color=body_color)
-        if occupied_positions is None:
-            occupied_positions = []
-        self.randomize_position(occupied_positions)
+        self.randomize_position(occupied_positions or [])
 
     def randomize_position(self, occupied_positions):
-        """Set a random position for the apple avoiding occupied positions.
+        """
+        Generate a random position for the apple, ensuring it
+        does not overlap with occupied positions.
 
         Args:
-            occupied_positions (list): List of positions that the apple
-                should avoid.
+            occupied_positions (list): Positions to avoid.
         """
         while True:
             self.position = (
@@ -97,41 +109,43 @@ class Apple(GameObject):
                 break
 
     def draw(self):
-        """Draw the apple on the game screen."""
+        """
+        Render the apple on the game screen.
+        """
         self.draw_cell(self.position)
 
 
 class Snake(GameObject):
-    """Class representing the snake in the game."""
+    """
+    Class representing the snake in the game. The snake grows
+    by eating apples and must avoid collisions with itself.
+    """
 
     def __init__(self, position=CENTER_POSITION, body_color=SNAKE_COLOR):
-        """Initialize the snake (position and color).
+        """
+        Initialize the snake with a starting position and color.
 
         Args:
             position (tuple): The initial position of the snake.
             body_color (tuple): The RGB color of the snake.
         """
         super().__init__(position=position, body_color=body_color)
-        self.reset(initial_direction=RIGHT)
+        self.reset()
 
-    def reset(self, initial_direction=None):
-        """Reset the snake to its initial state.
-
-        Args:
-            initial_direction (tuple, optional):
-            The initial direction of the snake.
-                Defaults to a random direction.
+    def reset(self):
+        """
+        Reset the snake to its initial state, with a length
+        of 1 and a random direction.
         """
         self.length = 1
         self.positions = [self.position]
-        self.direction = initial_direction if initial_direction else random.choice(
-            [UP, DOWN, LEFT, RIGHT]
-        )
+        self.direction = random.choice([UP, DOWN, LEFT, RIGHT])
         self.next_direction = None
         self.last = None
 
     def get_head_position(self):
-        """Get the position of the snake's head.
+        """
+        Get the position of the snake's head.
 
         Returns:
             tuple: The (x, y) position of the head.
@@ -139,7 +153,11 @@ class Snake(GameObject):
         return self.positions[0]
 
     def move(self):
-        """Update the snake's position by moving in the current direction."""
+        """
+        Update the snake's position by moving its head in
+        the current direction. The movement wraps around
+        screen boundaries.
+        """
         head_x, head_y = self.get_head_position()
         dir_x, dir_y = self.direction
         new_head = (
@@ -148,24 +166,30 @@ class Snake(GameObject):
         )
 
         self.positions.insert(0, new_head)
-        if len(self.positions) > self.length:
-            self.last = self.positions.pop()
+        self.last = self.positions.pop() if len(self.positions) > self.length else None
 
     def grow(self):
-        """Increase the length of the snake."""
+        """
+        Increase the length of the snake by one.
+        """
         self.length += 1
 
     def update_direction(self):
-        """Update the snake's direction based on the next dir."""
+        """
+        Update the snake's direction to the next direction
+        if it is set.
+        """
         if self.next_direction:
             self.direction = self.next_direction
             self.next_direction = None
 
     def draw(self):
-        """Draw the entire snake on the game screen."""
+        """
+        Render the snake on the game screen, drawing each
+        segment of its body.
+        """
         for position in self.positions:
             self.draw_cell(position)
-
         if self.last:
             self.draw_cell(self.last, BACKGROUND_COLOR)
 
@@ -183,7 +207,9 @@ DIRECTION_MAP = {
 
 
 def handle_keys(snake):
-    """Handle key presses for controlling the snake.
+    """
+    Handle keyboard input to control the snake's direction.
+    Pressing escape exits the game.
 
     Args:
         snake (Snake): The snake object to control.
@@ -203,13 +229,15 @@ def handle_keys(snake):
 
 
 def main():
-    """Main game loop."""
+    """
+    Main game loop. Initializes game objects and runs
+    the game logic and rendering in a loop.
+    """
     snake = Snake()
     apple = Apple(occupied_positions=snake.positions)
 
-    MAX_ITERATIONS = 1000  # To prevent infinite loop during tests
-
-    iteration = 0  # For debugging purposes
+    MAX_ITERATIONS = 1000
+    iteration = 0
 
     while iteration <= MAX_ITERATIONS:
         screen.fill(BACKGROUND_COLOR)
@@ -217,11 +245,8 @@ def main():
         snake.update_direction()
         snake.move()
 
-        # Check for collisions with itself
         if snake.get_head_position() in snake.positions[1:]:
             snake.reset()
-            apple.randomize_position(snake.positions)
-
         elif snake.get_head_position() == apple.position:
             snake.grow()
             apple.randomize_position(snake.positions)
