@@ -110,9 +110,7 @@ class Apple(GameObject):
                 break
 
     def draw(self):
-        """
-        Render the apple on the game screen.
-        """
+        """Render the apple on the game screen."""
         self.draw_cell(self.position)
 
 
@@ -173,9 +171,7 @@ class Snake(GameObject):
             self.last = None
 
     def grow(self):
-        """
-        Increase the length of the snake by one.
-        """
+        """Increase the length of the snake by one."""
         self.length += 1
 
     def update_direction(self):
