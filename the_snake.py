@@ -164,10 +164,12 @@ class Snake(GameObject):
         )
 
         self.positions.insert(0, new_head)
-        self.last = self.positions.pop() if len(self.positions) > self.length else None
-
+        if len(self.positions) > self.length:
+            self.last = self.positions.pop()
+        else:
+            self.last = None
     def grow(self):
-        """ Increase the length of the snake by one. """
+        """Increase the length of the snake by one."""
         self.length += 1
 
     def update_direction(self):
