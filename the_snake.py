@@ -135,11 +135,11 @@ class Snake(GameObject):
     def reset(self):
         """
         Reset the snake to its initial state, with a length
-        of 1 and a random direction.
+        of 1 and a starting direction to the right.
         """
         self.length = 1
         self.positions = [self.position]
-        self.direction = random.choice([UP, DOWN, LEFT, RIGHT])
+        self.direction = RIGHT
         self.next_direction = None
         self.last = None
 
@@ -236,10 +236,10 @@ def main():
     snake = Snake()
     apple = Apple(occupied_positions=snake.positions)
 
-    MAX_ITERATIONS = 1000
+    max_iterations = 1000
     iteration = 0
 
-    while iteration <= MAX_ITERATIONS:
+    while iteration <= max_iterations:
         screen.fill(BACKGROUND_COLOR)
         handle_keys(snake)
         snake.update_direction()
