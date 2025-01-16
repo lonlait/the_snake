@@ -168,6 +168,7 @@ class Snake(GameObject):
             self.last = self.positions.pop()
         else:
             self.last = None
+
     def grow(self):
         """Increase the length of the snake by one."""
         self.length += 1
